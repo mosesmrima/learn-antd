@@ -25,6 +25,7 @@ class FormDemo extends React.Component {
     }
 
     handleDel =  record => {
+        // eslint-disable-next-line array-callback-return
         let newData = this.state.data.filter(obj => {
             if (record.key !== obj.key) return obj
         })
