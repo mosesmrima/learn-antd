@@ -9,9 +9,14 @@ class FormDemo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            page:10,
+            pageSize: 2,
+            totalElements: 0
         };
     }
+
+
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields( (err, val) => {
@@ -31,6 +36,15 @@ class FormDemo extends React.Component {
         })
         this.setState({data: newData})
     }
+
+    handlePageChange = (newPageNumber, newPageSize) => {
+        console.log("new pages conf", newPageSize)
+            this.setState({page: newPageNumber});
+            this.setState({pageSize: newPageSize})
+        }
+
+
+
 
     render() {
         const {getFieldDecorator} = this.props.form;
@@ -54,6 +68,20 @@ class FormDemo extends React.Component {
                 )
             }
         ]
+
+        const pagination = {
+            page: this.state.page,
+            pageSize: this.state.pageSize,
+            total: this.state.data.length,
+            showSizeChanger: true,
+            pageSizeOptions: ["2", '10', '20', '30'],
+            onShowSizeChange: (page, size) => {
+                this.setState({page: page})
+                this.setState({pageSize: size})
+            }
+        }
+
+
         return (
            <div className={"demo"}>
                <Form onSubmit={this.handleSubmit} layout={"inline"}>
@@ -76,7 +104,7 @@ class FormDemo extends React.Component {
                    </Form.Item>
                </Form>
 
-               <Table columns={columns} dataSource={this.state.data} rowKey={(record)=>record.key}></Table>
+               <Table columns={columns} pagination={pagination} dataSource={this.state.data} rowKey={(record)=>record.key} ></Table>
            </div>
         )
     }
