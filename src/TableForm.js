@@ -112,3 +112,80 @@
 //
 // const App = Form.create({name: "my_form"})(FormDemo)
 // export default App;
+
+
+
+//Fetch from axios
+
+
+// import React from "react";
+// import axios from "axios";
+// import {Table} from "antd";
+// import "antd/dist/antd.css"
+// import "./App.css"
+// class App extends React.Component {
+//     constructor(props, context) {
+//         super(props, context);
+//         this.state = {
+//             data: [],
+//             page: 1,
+//             pageSize: 10,
+//             total: 0
+//         }
+//     }
+//
+//     componentDidMount() {
+//         axios({
+//             method: "get",
+//             url: "https://jsonplaceholder.ir/users"
+//         })
+//             .then(res => {
+//                 let newData = res.data.map(user => {
+//                     return (({id,name, username, email}) => ({ id, name, username, email }))(user); //destructure received data
+//                 });
+//                 this.setState({data: newData})
+//                 this.setState({total: newData.length})
+//             }).catch(err => console.log("an error occurred"))
+//     }
+//
+//
+//     render () {
+//         let data = this.state.data
+//         const cols = [
+//             {
+//                 title: "Name",
+//                 dataIndex: "name",
+//                 key: "name"
+//             },
+//             {
+//                 title: "Username",
+//                 dataIndex: "username",
+//                 key: "username"
+//             },
+//             {
+//                 title: "Email",
+//                 dataIndex: "email",
+//                 key: "email"
+//             }
+//         ]
+//         const pagination = {
+//             page: this.state.page,
+//             pageSize: this.state.pageSize,
+//             total: this.state.data.length,
+//             showSizeChanger: true,
+//             pageSizeOptions: ["2", '10', '20', '30'],
+//             onShowSizeChange: (page, size) => {
+//                 this.setState({page: page})
+//                 this.setState({pageSize: size})
+//             }
+//         }
+//
+//         return(
+//             <div className={"demo"}>
+//                 <Table dataSource={data} columns={cols} pagination={pagination} rowKey={record => record.id}></Table>
+//             </div>
+//         );
+//     }
+// }
+//
+// export default App;
