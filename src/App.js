@@ -10,7 +10,7 @@ class FormDemo extends React.Component {
         super(props);
         this.state = {
             data: [],
-            page:10,
+            page:1,
             pageSize: 2,
             totalElements: 0
         };
@@ -37,13 +37,13 @@ class FormDemo extends React.Component {
         this.setState({data: newData})
     }
 
-    handlePageChange = (newPageNumber, newPageSize) => {
-        console.log("new pages conf", newPageSize)
-            this.setState({page: newPageNumber});
-            this.setState({pageSize: newPageSize})
+
+    handlePageChange = (data) => {
+        let current = data;
+
+        console.log("new pages conf", current)
+            this.setState({page: current});
         }
-
-
 
 
     render() {
@@ -104,7 +104,7 @@ class FormDemo extends React.Component {
                    </Form.Item>
                </Form>
 
-               <Table columns={columns} pagination={pagination} dataSource={this.state.data} rowKey={(record)=>record.key} ></Table>
+               <Table columns={columns} pagination={pagination} dataSource={this.state.data} onChange={this.handlePageChange} rowKey={(record)=>record.key} ></Table>
            </div>
         )
     }
