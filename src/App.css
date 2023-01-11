@@ -1,6 +1,15 @@
-.demo{
-    width: 70%;
-    margin: 20px auto;
+.app {
+    width: 100%;
+    margin: 40px auto;
 }
 
 
+.all-users {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.one-user {
+    width: 60%;
+    margin: 20px auto;
+}
