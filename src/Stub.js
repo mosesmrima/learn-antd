@@ -1,9 +1,12 @@
+#!/bin/node
 let arr = [{id:1,name:'a',age:10},{id:1,name:'b',age:12},{id:2,name:'c',age:15},{id:3,name:'d',age:20},{id:1,name:'a',age:10}];
 
 function checkIfArr(input) {
     return Array.isArray(input);
 }
  console.log("Is input an array?")
+const text= prompt("Input to check if it's an array");
+console.log(text)
 console.log(checkIfArr(33))
 
 function cloneArray(arr) {
@@ -13,7 +16,8 @@ console.log("Clone array")
 console.log(cloneArray([1,2,3,4]))
 
 function filterByID(arr) {
-    let keys = new Set();
+    let keys =
+        new Set();
     let noDupId = arr.filter( el => {
         let key = el.id;
         if (keys.has(key)) {
