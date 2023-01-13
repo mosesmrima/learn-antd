@@ -1,19 +1,27 @@
 import React from "react"
 import {dataArr} from "./data";
-import {Table, Tag} from "antd"
+import {Table, Tag, Button} from "antd"
 import {useState, useEffect} from "react";
+import { Routes, Route} from "react-router-dom";
+import {useNavigate} from "react-router"
+import FormComp from "./Form"
 import Modal from "./Popup"
 import "antd/dist/antd.css"
 import "./App.css"
+import RouteMe from "./RouteMe";
 
 
  function App () {
     let [userData, setUserData] = useState([])
-
      useEffect(()=>{
-         const dataSource = dataArr.map(el => (({alias_name, portrait_data, residence, status, patient_number, primary_contact}) => ({alias_name, portrait_data, residence, status, patient_number, primary_contact}))(el))
-         setUserData(dataSource)
+         setUserData(dataArr)
      }, [])
+
+     const nav = useNavigate()
+     const handleClick = () => {
+        console.log("hey")
+        nav("routeme")
+     }
 
 
      const columns = [
@@ -51,9 +59,16 @@ import "./App.css"
             }
         ]
         return (
-            <div>
-                <Table dataSource={userData} columns={columns} rowKey={record => record.patient_number} size={"small"}></Table>
-            </div>
+                <div>
+                    <Routes>
+                        <Route>
+                            <Route path={"routeme"} element={<RouteMe/>}/> 
+                        </Route>
+                    </Routes>
+                    <Table dataSource={userData} columns={columns} rowKey={record => record.patient_number} size={"small"}></Table>
+                    <FormComp/>
+                    <Button onClick={handleClick}>nav</Button>
+                </div>
         )
     }
     export default App
