@@ -65,9 +65,9 @@ import RouteMe from "./RouteMe";
                             <Route path={"routeme"} element={<RouteMe/>}/> 
                         </Route>
                     </Routes>
-                    <Table dataSource={userData} columns={columns} rowKey={record => record.patient_number} size={"small"}></Table>
+                    {/*<Table dataSource={userData} columns={columns} rowKey={record => record.patient_number} size={"small"}></Table>*/}
                     <FormComp/>
-                    <Button onClick={handleClick}>nav</Button>
+
                 </div>
         )
     }
