@@ -1,3 +1,5 @@
+// noinspection JSValidateTypes
+
 import React from "react";
 import { Form, Row, Col, Input, Button, Select} from 'antd'
 
