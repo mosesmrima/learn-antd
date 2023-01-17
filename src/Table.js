@@ -12,7 +12,7 @@ export default function AntTable() {
         setUserData(dataArr)
     }, [])
     const navigate = useNavigate();
-    const handleEdit = record => navigate("/sample", {state: {data: record}},  {replace: true})
+    const handleEdit = record => navigate(`/patients/${record.patient_number}`, {state: {data: record}},  {replace: true})
     const columns = [
         {
             title: '',
