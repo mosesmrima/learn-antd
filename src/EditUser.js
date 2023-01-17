@@ -1,15 +1,22 @@
-import {useLocation} from 'react-router-dom';
-import {Form, Input} from "antd";
+import {useLocation, useNavigate} from 'react-router-dom';
+import {Button, Form, Input} from "antd";
 
 const {Item} = Form
 export default function User() {
+    const navigate = useNavigate();
     const location = useLocation();
     const layout = {
         labelCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 8 }, lg: { span: 8 } },
         wrapperCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 12 }, lg: { span: 8 } }
     };
+    const handleClick = () => {
+        navigate(-1);
+    }
     return (
       <Form>
+          <Item {...layout}>
+              <Button onClick={handleClick}>Back</Button>
+          </Item>
           <Item name={"patient_number"} label={"Patient Number"} {...layout}>
               <Input defaultValue={location.state.data.patient_number}/>
           </Item>
