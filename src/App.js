@@ -6,6 +6,7 @@ import Home from "./Home"
 import RouteMe from "./RouteMe";
 import AntTable from "./Table";
 import EditUser from "./EditUser"
+import Charts from "./Charts"
 
  function App () {
      return (
@@ -16,6 +17,7 @@ import EditUser from "./EditUser"
                             <li> <Link to={"/routeme"} > Routeme </Link> </li>
                             <li> <Link to={"/form"}>Form</Link> </li>
                             <li> <Link to={"/patients"}>Patients</Link> </li>
+                            <li> <Link to={"/charts"}>Charts</Link> </li>
                         </ul>
                     </nav>
                     <Routes>
@@ -26,6 +28,7 @@ import EditUser from "./EditUser"
                             <Route index element={ <AntTable/> }/>
                             <Route path={":pnumber"} element={ <EditUser/> }/>
                         </Route>
+                        <Route path={"/charts"} element={ <Charts/> }/>
                     </Routes>
                     </>
         )
