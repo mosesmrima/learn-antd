@@ -30,11 +30,11 @@
     height: 0;
     padding-top: 100%;
     cursor: zoom-in;
-    z-index: 100000000;
 }
 
 .image-container.open {
     cursor: zoom-out;
+    z-index: 10;
 }
 
 .image-container .shade {
@@ -87,8 +87,19 @@
 
 
 .plots-line {
-    width: 50%;
+    width: 60%;
+    height: auto;
     margin-right: auto;
     margin-left: auto;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
+
+.nav-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 50px;
+    list-style: none}
