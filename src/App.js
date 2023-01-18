@@ -12,12 +12,12 @@ import Charts from "./Charts"
      return (
                 <>
                     <nav>
-                        <ul>
+                        <ul className={"nav-bar"}>
                             <li> <Link to={"/"}>Home</Link> </li>
                             <li> <Link to={"/routeme"} > Routeme </Link> </li>
                             <li> <Link to={"/form"}>Form</Link> </li>
                             <li> <Link to={"/patients"}>Patients</Link> </li>
-                            <li> <Link to={"/charts"}>Charts</Link> </li>
+                            <li> <Link to={"/ant-charts"}>AntD Charts</Link> </li>
                         </ul>
                     </nav>
                     <Routes>
@@ -28,7 +28,7 @@ import Charts from "./Charts"
                             <Route index element={ <AntTable/> }/>
                             <Route path={":pnumber"} element={ <EditUser/> }/>
                         </Route>
-                        <Route path={"/charts"} element={ <Charts/> }/>
+                        <Route path={"/ant-charts"} element={ <Charts/> }/>
                     </Routes>
                     </>
         )
