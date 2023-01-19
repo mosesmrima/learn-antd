@@ -67,7 +67,7 @@ export default function Charts() {
             <h1>GDP (mdbb)</h1>
             <Bar xField={"gdp"}
                  yField={"year"}
-                 yScale={-1}
+                 row={false}
                  data={data}
                  isGroup={true}
                  seriesField={"name"}
