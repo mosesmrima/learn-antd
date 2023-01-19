@@ -13,6 +13,7 @@
     "axios": "^1.2.2",
     "framer-motion": "^8.4.2",
     "mdb-react-ui-kit": "^5.1.0",
+    "mdb-ui-kit": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal-image": "^2.6.0",
