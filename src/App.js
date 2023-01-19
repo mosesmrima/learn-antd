@@ -7,6 +7,7 @@ import RouteMe from "./RouteMe";
 import AntTable from "./Table";
 import EditUser from "./EditUser"
 import Charts from "./Charts"
+import MdbCharts from "./MdbCharts";
 
  function App () {
      return (
@@ -18,6 +19,7 @@ import Charts from "./Charts"
                             <li> <Link to={"/form"}>Form</Link> </li>
                             <li> <Link to={"/patients"}>Patients</Link> </li>
                             <li> <Link to={"/ant-charts"}>AntD Charts</Link> </li>
+                            <li> <Link to={"/mdb-charts"}>MDB Charts</Link> </li>
                         </ul>
                     </nav>
                     <Routes>
@@ -29,6 +31,7 @@ import Charts from "./Charts"
                             <Route path={":pnumber"} element={ <EditUser/> }/>
                         </Route>
                         <Route path={"/ant-charts"} element={ <Charts/> }/>
+                        <Route path={"/mdb-charts"} element={ <MdbCharts/> }/>
                     </Routes>
                     </>
         )
