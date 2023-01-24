@@ -1,9 +1,11 @@
 import {Button, Tabs} from "antd";
 import {RouteContext} from "./App";
-import {useContext} from "react";
+import {useContext,} from "react";
+import {useNavigate} from "react-router-dom";
 
 const {TabPane} = Tabs
 export const Tab2 = () => {
+    const navigate = useNavigate()
     const {activeKey, setActiveKey} = useContext(RouteContext)
     return (
         <>
@@ -14,7 +16,7 @@ export const Tab2 = () => {
                 </TabPane>
                 <TabPane tab={"Tab 2"} key={"2"}>
                     This is tab2 <br/>
-                    <Button>Hello</Button>
+                    <Button onClick={()=>navigate("/tab3")}>Hello</Button>
                 </TabPane>
             </Tabs>
         </>
