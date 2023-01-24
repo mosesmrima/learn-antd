@@ -10,6 +10,7 @@ import Charts from "./Charts"
 import {Tab1} from "./Tab1";
 import {Tab2} from "./Tab2"
 import {Tab3} from "./Tab3"
+import {StepForm} from "./StepForm";
 import {createContext, useState} from "react";
 
 
@@ -27,6 +28,7 @@ function App () {
                                 <li> <Link to={"/patients"}>Patients</Link> </li>
                                 <li> <Link to={"/ant-charts"}>AntD Charts</Link> </li>
                                 <li> <Link to={"/tab1"}>Tabs</Link> </li>
+                                <li> <Link to={"/stepform"}>Step Form</Link> </li>
                             </ul>
                         </nav>
                         <Routes>
@@ -41,6 +43,7 @@ function App () {
                             <Route path={"/tab1"} element={ <Tab1/> }/>
                             <Route path={"/tab2"} element={<Tab2/>}/>
                             <Route path={"/tab3"} element={<Tab3/>}/>
+                            <Route path={"/stepform"}  element={<StepForm/>}/>
                         </Routes>
                     </RouteContext.Provider>
                     </>
