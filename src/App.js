@@ -9,9 +9,10 @@ import EditUser from "./EditUser"
 import Charts from "./Charts"
 import {Tab1} from "./Tab1";
 import {Tab2} from "./Tab2"
+import {Tab3} from "./Tab3"
 import {createContext, useState} from "react";
 
-// eslint-disable-next-line no-undef
+
 export const RouteContext = createContext()
 function App () {
     const [activeKey, setActiveKey] = useState("1")
@@ -39,6 +40,7 @@ function App () {
                             <Route path={"/ant-charts"} element={ <Charts/> }/>
                             <Route path={"/tab1"} element={ <Tab1/> }/>
                             <Route path={"/tab2"} element={<Tab2/>}/>
+                            <Route path={"/tab3"} element={<Tab3/>}/>
                         </Routes>
                     </RouteContext.Provider>
                     </>
