@@ -10,7 +10,7 @@ import Charts from "./Charts"
 import {Tab1} from "./Tab1";
 import {Tab2} from "./Tab2"
 import {Tab3} from "./Tab3"
-import {StepForm} from "./StepForm";
+import Resume from "./StepForm";
 import {createContext, useState} from "react";
 
 
@@ -43,7 +43,7 @@ function App () {
                             <Route path={"/tab1"} element={ <Tab1/> }/>
                             <Route path={"/tab2"} element={<Tab2/>}/>
                             <Route path={"/tab3"} element={<Tab3/>}/>
-                            <Route path={"/stepform"}  element={<StepForm/>}/>
+                            <Route path={"/stepform"}  element={<Resume/>}/>
                         </Routes>
                     </RouteContext.Provider>
                     </>
