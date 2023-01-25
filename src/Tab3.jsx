@@ -9,7 +9,7 @@ export const Tab3 = () => {
             <Tabs defaultActiveKey={"1"} onChange={()=>console.log("change")} onTabClick={()=>console.log("change")}>
                 <TabPane tab={"Tab 1"} key={"1"}>
 
-                    <Button onClick={()=>navigate("/tab1")}>Hello fom 3</Button>
+                    <Button onClick={()=>navigate(-1)}>Hello fom 3</Button>
                 </TabPane>
                 <TabPane tab={"Tab 2"} key={"2"}>
                     <Button>Hello</Button>
