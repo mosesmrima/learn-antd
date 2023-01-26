@@ -70,10 +70,10 @@ const StepForm = (props) => {
             </div>
         }
     ]
-    const handlePrevious = (e) => {
+    const handlePrevious = () => {
         setCurrent(prevState => prevState - 1)
     }
-    const handleNext = (e) => {
+    const handleNext = () => {
         console.log(value)
         setCurrent(prevState => prevState + 1)
     }
@@ -81,7 +81,7 @@ const StepForm = (props) => {
         e.preventDefault()
         props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-               message.success("Submitted successfully")
+               message.success(values)
             }
         })
     }
