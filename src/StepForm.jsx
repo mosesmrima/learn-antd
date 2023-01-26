@@ -1,9 +1,15 @@
-import {Steps, Button, message, Form, Input} from "antd";
+import {Steps, Button, message, Form, Input, DatePicker} from "antd";
 import {useState} from "react";
 
 
 const StepForm = (props) => {
+    const layout = {
+        labelCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 8 }, lg: { span: 8 } },
+        wrapperCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 12 }, lg: { span: 8 } }
+    };
+    const {getFieldDecorator} = props.form
     const [current, setCurrent] = useState(0)
+    const [hobbies, setHobbies] = useState([1]);
     const [values, setValue] = useState({
         name: "",
         email: "",
@@ -11,21 +17,27 @@ const StepForm = (props) => {
         message: "",
         school: "",
         degree: "",
-        "end-year": "",
+        "edu-period": [],
         company: "",
         position: "",
-        year: ""
+        "work-period": []
     })
-    const {getFieldDecorator} = props.form
+    const addHobby = () => {
+        const nextHobbies = [...hobbies, hobbies.length + 1];
+        setHobbies(nextHobbies);
+    }
+
+    const removeHobby = index => {
+        setHobbies(hobbies.filter((hobby, i) => i !== index));
+    };
+
     const handlePersist = value => {
         setValue({...values, ...value})
-        console.log(values)
     }
     const handlePrevious = () => {
         setCurrent(prevState => prevState - 1)
     }
     const handleNext = () => {
-        console.log(values)
         setCurrent(prevState => prevState + 1)
     }
     const handleFinish = (e) => {
@@ -36,95 +48,115 @@ const StepForm = (props) => {
             }
         })
     }
+
     const steps = [
         {
             title: "Bio Data",
-            content: <div>
-                <Form.Item label="Name">
+            content: <>
+                <Form.Item label="Name" {...layout}>
                     {
                         getFieldDecorator("name",{initialValue: values.name, rules: [{required: true}]})(
                             <Input onChange={ e => handlePersist({name: e.target.value})}/>
                         )
                     }
                 </Form.Item>
-                <Form.Item label="Email">
+                <Form.Item label="Email" {...layout}>
                     {
-                        getFieldDecorator("email", {rules: [{required: true}]})(
-                            <Input/>
+                        getFieldDecorator("email", {initialValue: values.email,rules: [{required: true}]})(
+                            <Input onChange={ e => handlePersist({email: e.target.value})}/>
                         )
                     }
                 </Form.Item>
-                <Form.Item label="Phone">
+                <Form.Item label="Phone" {...layout}>
                     {
-                        getFieldDecorator("phone", {rules: [{required: true}]})(
-                            <Input/>
+                        getFieldDecorator("phone", {initialValue: values.phone,rules: [{required: true}]})(
+                            <Input onChange={ e => handlePersist({phone: e.target.value})}/>
                         )
                     }
                 </Form.Item>
-            </div>
+            </>
         },
         {
             title: "Education",
-            content: <div>
-                <Form.Item label="School">
+            content: <>
+                <Form.Item label="School" {...layout}>
                     {
-                        getFieldDecorator("school", {rules: [{required: true}]})(
-                            <Input/>
+                        getFieldDecorator("school", {initialValue: values.school, rules: [{required: true}]})(
+                            <Input onChange={ e => handlePersist({school: e.target.value})}/>
                         )
                     }
                 </Form.Item>
-                <Form.Item label="Degree">
+                <Form.Item label="Degree" {...layout}>
                     {
-                        getFieldDecorator("degree", {rules: [{required: true}]})(
-                            <Input/>
+                        getFieldDecorator("degree", {initialValue: values.degree,rules: [{required: true}]})(
+                            <Input onChange={ e => handlePersist({degree: e.target.value})}/>
                         )
                     }
                 </Form.Item>
-                <Form.Item label="Year">
+                <Form.Item label="Duration" {...layout}>
                     {
-                        getFieldDecorator("end-year", {rules: [{required: true}]})(
-                            <Input/>
+                        getFieldDecorator("edu-period", {initialValue: values["edu-period"], rules: [{ type: 'array', required: true, message: 'Please select time!' }]})(
+                            <DatePicker.RangePicker onChange={ e => handlePersist({"edu-period": e})}/>
                         )
                     }
                 </Form.Item>
-            </div>
+
+            </>
         },
         {
             title: "Experience",
-            content: <div>
-                <Form.Item label="Company">
+            content: <>
+                <Form.Item label="Company" {...layout}>
                     {
-                        getFieldDecorator("company", {rules: [{required: true}]})(
-                            <Input/>
+                        getFieldDecorator("company", {initialValue: values.company, rules: [{required: true}]})(
+                            <Input onChange={ e => handlePersist({company: e.target.value})}/>
                         )
                     }
                 </Form.Item>
-                <Form.Item label="Position">
+                <Form.Item label="Position" {...layout}>
                     {
-                        getFieldDecorator("position", {rules: [{required: true}]})(
-                            <Input/>
+                        getFieldDecorator("position", {initialValue: values.position, rules: [{required: true}]})(
+                            <Input onChange={ e => handlePersist({position: e.target.value})}/>
                         )
                     }
                 </Form.Item>
-                <Form.Item label="Year">
+                <Form.Item label="Duration" {...layout}>
                     {
-                        getFieldDecorator("year", {rules: [{required: true}]})(
-                            <Input/>
+                        getFieldDecorator("work-period", {initialValue: values["work-period"], rules: [{ type: 'array', required: true, message: 'Please select time!' }]})(
+                            <DatePicker.RangePicker onChange={ e => handlePersist({"work-period": e})}/>
                         )
                     }
                 </Form.Item>
-            </div>
+            </>
+        },
+        {
+            title: "sample",
+            content: <>
+                {hobbies.map((hobby, index) => (
+                    <Form.Item  key={hobby} {...layout} label={`hobby ${hobby}`}>
+                        {getFieldDecorator(`hobby${hobby}`, {
+                            rules: [{ required: true, message: 'Please input your hobby!' }],
+                        })(<Input style={{width: "60%", marginRight: 8}} onChange={e=> console.log(e.target.value)} />)}
+                        <Button type="danger" size={"small"} onClick={() => removeHobby(index)}>Remove</Button>
+                    </Form.Item>
+                ))}
+                <Form.Item style={{marginLeft:"auto", marginRight: "auto"}} >
+                    <Button type="dashed" onClick={addHobby} style={{marginLeft:"auto", marginRight: "auto"}}>
+                        Add another hobby
+                    </Button>
+                </Form.Item>
+            </>
         }
     ]
 
     return (
-        <div>
-            <Steps current={current}>
+        <>
+            <Steps current={current} style={{width: "90%", marginRight: "auto", marginLeft: "auto"}}>
                 {
                     steps.map((el ,index)=> <Steps.Step key={index} title={el.title}/>)
                 }
             </Steps>
-                <Form onSubmit={handleFinish}>
+                <Form onSubmit={handleFinish} style={{width: "90%", marginLeft: "auto", marginRight: "auto"}}>
                     {
                         steps[current].content
                     }
@@ -152,7 +184,7 @@ const StepForm = (props) => {
                         >Finish</Button>)
                     }
                 </Form>
-        </div>
+        </>
     );
 }
 
