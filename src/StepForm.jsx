@@ -1,9 +1,10 @@
-import {Steps, Button, message, Form, Input} from "antd";
+import {Steps, Button, message, Form, Input, Card} from "antd";
 import {useState} from "react";
 
 
 const StepForm = (props) => {
     const [current, setCurrent] = useState(0)
+    const [value, setValue] = useState("")
     const {getFieldDecorator} = props.form
 
 
@@ -13,7 +14,7 @@ const StepForm = (props) => {
             content: <div>
                 <Form.Item label="Name">
                     {
-                        getFieldDecorator("name",{rules: [{required: true}]})(<Input/>)
+                        getFieldDecorator("name",{initialValue: value, rules: [{required: true}]})(<Input onInput={ e => setValue(e.target.value)}/>)
                     }
                 </Form.Item>
                 <Form.Item label="Email">
@@ -73,14 +74,14 @@ const StepForm = (props) => {
         setCurrent(prevState => prevState - 1)
     }
     const handleNext = (e) => {
-        e.preventDefault()
+        console.log(value)
         setCurrent(prevState => prevState + 1)
     }
     const handleFinish = (e) => {
         e.preventDefault()
         props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values)
+               message.success("Submitted successfully")
             }
         })
     }
@@ -93,20 +94,24 @@ const StepForm = (props) => {
                     steps.map((el ,index)=> <Steps.Step key={index} title={el.title}/>)
                 }
             </Steps>
-            <Form onSubmit={handleFinish}>
-                {
-                    steps[current].content
-                }
-                {
-                    current > 0 && <Button type={"primary"} onClick={(e) => handlePrevious(e)} style={{margin: 8}}>Previous</Button>
-                }
-                {
-                    current < steps.length - 1 && <Button type="primary" onClick={(e) => handleNext(e)} style={{margin: 8}}>Next</Button>
-                }
-                {
-                    current === steps.length - 1 && <Button htmlType={"submit"} onClick={(e) => handleFinish(e)} style={{margin: 8}}>Finish</Button>
-                }
-            </Form>
+
+            <Card>
+                <Form onSubmit={handleFinish}>
+                    {
+                        steps[current].content
+                    }
+                    {
+                        current > 0 && <Button type={"primary"} onClick={(e) => handlePrevious(e)} style={{margin: 8}}>Previous</Button>
+                    }
+                    {
+                        current < steps.length - 1 && <Button type="primary" onClick={(e) => handleNext(e)} style={{margin: 8}}>Next</Button>
+                    }
+                    {
+                        current === steps.length - 1 && <Button htmlType={"submit"} onClick={(e) => handleFinish(e)} style={{margin: 8}}>Finish</Button>
+                    }
+                </Form>
+            </Card>
+
 
 
         </div>
