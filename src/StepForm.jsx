@@ -1,5 +1,5 @@
 import {Steps, Button, message, Form, Input, DatePicker} from "antd";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {set} from "mdb-ui-kit/src/js/mdb/perfect-scrollbar/lib/css";
 
 
@@ -8,11 +8,10 @@ const StepForm = (props) => {
         labelCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 8 }, lg: { span: 8 } },
         wrapperCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 12 }, lg: { span: 8 } }
     };
-    const {getFieldDecorator} = props.form
+    const {getFieldDecorator, getFieldValue} = props.form
     const [current, setCurrent] = useState(0)
     const [hobbies, setHobbies] = useState([1]);
-    const [hobbiesVals, setHobbiesVals] = useState([])
-    const [typedHobby, setTypedHobby] = useState("")
+
     const [values, setValue] = useState({
         name: "",
         email: "",
@@ -25,15 +24,9 @@ const StepForm = (props) => {
         position: "",
         "work-period": []
     })
-
-    const trackHobby = val => setTypedHobby(val)
-    const saveTypedHobby = (val, index) => {
-        const newArr = [...hobbiesVals]
-        newArr[index] = val
-        setHobbiesVals(newArr)
-        console.log(hobbiesVals)
-    }
-
+    useEffect(()=>{
+        console.log(props.form.getFieldsValue())
+    }, [current])
     const addHobby = () => {
         const nextHobbies = [...hobbies, hobbies.length + 1];
         setHobbies(nextHobbies);
@@ -46,17 +39,18 @@ const StepForm = (props) => {
     const handlePersist = value => {
         setValue({...values, ...value})
     }
-    const handlePrevious = () => {
+    const handlePrevious = (e) => {
+        props.form.setFieldsValue(props.form.getFieldsValue())
         setCurrent(prevState => prevState - 1)
     }
-    const handleNext = () => {
+    const handleNext = (e) => {
         setCurrent(prevState => prevState + 1)
     }
     const handleFinish = (e) => {
         e.preventDefault()
         props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                message.success(values)
+                console.log(values)
             }
         })
     }
@@ -67,8 +61,8 @@ const StepForm = (props) => {
             content: <>
                 <Form.Item label="Name" {...layout}>
                     {
-                        getFieldDecorator("name",{initialValue: values.name, rules: [{required: true}]})(
-                            <Input onChange={ e => handlePersist({name: e.target.value})}/>
+                        getFieldDecorator("name",{rules: [{required: true}]})(
+                            <Input />
                         )
                     }
                 </Form.Item>
@@ -144,15 +138,15 @@ const StepForm = (props) => {
         {
             title: "sample",
             content: <>
-                {hobbies.map((hobby, index) => (
-                    <Form.Item  key={hobby} {...layout} label={`hobby ${hobby}`}>
-                        {getFieldDecorator(`hobby${hobby}`, {
-                            rules: [{initialValue: hobbiesVals[index], required: true, message: 'Please input your hobby!' }],
-                        })(<Input style={{width: "60%", marginRight: 8}} onChange={e=> trackHobby(e.target.value)} />)}
-                        <Button type="danger" size={"small"} onClick={() => saveTypedHobby(typedHobby, index)}>Save Hobby</Button>
+                {hobbies.map((hobby, index) => {
+                    let name = `hobby${hobby}`
+                    return (<Form.Item  key={hobby} {...layout} label={`hobby ${hobby}`}>
+                        {getFieldDecorator(name, {
+                            rules: [{ required: true, message: 'Please input your hobby!' }],
+                        })(<Input style={{width: "60%", marginRight: 8}} onInput={(e)=> handlePersist({[name]: e.target.value})} />)}
                         <Button type="danger" size={"small"} onClick={() => removeHobby(index)}>Remove</Button>
-                    </Form.Item>
-                ))}
+                    </Form.Item>)
+                })}
                 <Form.Item style={{marginLeft:"auto", marginRight: "auto"}} >
                     <Button type="dashed" onClick={addHobby} style={{marginLeft:"auto", marginRight: "auto"}}>
                         Add another hobby
