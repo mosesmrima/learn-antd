@@ -1,5 +1,6 @@
 import {Steps, Button, message, Form, Input, DatePicker} from "antd";
 import {useState} from "react";
+import {set} from "mdb-ui-kit/src/js/mdb/perfect-scrollbar/lib/css";
 
 
 const StepForm = (props) => {
@@ -10,6 +11,8 @@ const StepForm = (props) => {
     const {getFieldDecorator} = props.form
     const [current, setCurrent] = useState(0)
     const [hobbies, setHobbies] = useState([1]);
+    const [hobbiesVals, setHobbiesVals] = useState([])
+    const [typedHobby, setTypedHobby] = useState("")
     const [values, setValue] = useState({
         name: "",
         email: "",
@@ -22,6 +25,15 @@ const StepForm = (props) => {
         position: "",
         "work-period": []
     })
+
+    const trackHobby = val => setTypedHobby(val)
+    const saveTypedHobby = (val, index) => {
+        const newArr = [...hobbiesVals]
+        newArr[index] = val
+        setHobbiesVals(newArr)
+        console.log(hobbiesVals)
+    }
+
     const addHobby = () => {
         const nextHobbies = [...hobbies, hobbies.length + 1];
         setHobbies(nextHobbies);
@@ -135,8 +147,9 @@ const StepForm = (props) => {
                 {hobbies.map((hobby, index) => (
                     <Form.Item  key={hobby} {...layout} label={`hobby ${hobby}`}>
                         {getFieldDecorator(`hobby${hobby}`, {
-                            rules: [{ required: true, message: 'Please input your hobby!' }],
-                        })(<Input style={{width: "60%", marginRight: 8}} onChange={e=> console.log(e.target.value)} />)}
+                            rules: [{initialValue: hobbiesVals[index], required: true, message: 'Please input your hobby!' }],
+                        })(<Input style={{width: "60%", marginRight: 8}} onChange={e=> trackHobby(e.target.value)} />)}
+                        <Button type="danger" size={"small"} onClick={() => saveTypedHobby(typedHobby, index)}>Save Hobby</Button>
                         <Button type="danger" size={"small"} onClick={() => removeHobby(index)}>Remove</Button>
                     </Form.Item>
                 ))}
@@ -172,7 +185,7 @@ const StepForm = (props) => {
                             <Button
                             type="primary"
                             onClick={(e) => handleNext(e)}
-                            style={{margin: 8}}
+                            style={{marginLeft: "80%"}}
                             >Next</Button>)
                     }
                     {
@@ -180,7 +193,7 @@ const StepForm = (props) => {
                             <Button
                             htmlType={"submit"}
                             onClick={(e) => handleFinish(e)}
-                            style={{margin: 8}}
+                            style={{marginLeft: "80%"}}
                         >Finish</Button>)
                     }
                 </Form>
