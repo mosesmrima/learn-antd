@@ -1,6 +1,5 @@
-import {Steps, Button, message, Form, Input, DatePicker} from "antd";
+import {Steps, Button, Form, Input, DatePicker} from "antd";
 import {useState, useEffect} from "react";
-import {set} from "mdb-ui-kit/src/js/mdb/perfect-scrollbar/lib/css";
 
 
 const StepForm = (props) => {
@@ -8,7 +7,7 @@ const StepForm = (props) => {
         labelCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 8 }, lg: { span: 8 } },
         wrapperCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 12 }, lg: { span: 8 } }
     };
-    const {getFieldDecorator, getFieldValue} = props.form
+    const {getFieldDecorator} = props.form
     const [current, setCurrent] = useState(0)
     const [hobbies, setHobbies] = useState([1]);
 
@@ -40,11 +39,13 @@ const StepForm = (props) => {
         setValue({...values, ...value})
     }
     const handlePrevious = (e) => {
-        props.form.setFieldsValue(props.form.getFieldsValue())
         setCurrent(prevState => prevState - 1)
+
     }
     const handleNext = (e) => {
+        const vals = props.form.getFieldsValue()
         setCurrent(prevState => prevState + 1)
+        props.form.setFieldsValue(vals)
     }
     const handleFinish = (e) => {
         e.preventDefault()
@@ -61,14 +62,18 @@ const StepForm = (props) => {
             content: <>
                 <Form.Item label="Name" {...layout}>
                     {
-                        getFieldDecorator("name",{rules: [{required: true}]})(
+                        getFieldDecorator("name",{
+                            // initialValue: values.name,
+                            rules: [{required: true}]})(
                             <Input />
                         )
                     }
                 </Form.Item>
                 <Form.Item label="Email" {...layout}>
                     {
-                        getFieldDecorator("email", {initialValue: values.email,rules: [{required: true}]})(
+                        getFieldDecorator("email", {
+                            initialValue: values.email
+                            ,rules: [{required: true, type: "email"}]})(
                             <Input onChange={ e => handlePersist({email: e.target.value})}/>
                         )
                     }
@@ -77,6 +82,13 @@ const StepForm = (props) => {
                     {
                         getFieldDecorator("phone", {initialValue: values.phone,rules: [{required: true}]})(
                             <Input onChange={ e => handlePersist({phone: e.target.value})}/>
+                        )
+                    }
+                </Form.Item>
+                <Form.Item label="D.O.B" {...layout}>
+                    {
+                        getFieldDecorator("dob",{initialValue:values.dob, rules: [{required: true}]})(
+                            <DatePicker onChange={ e => handlePersist({"dob": e})}/>
                         )
                     }
                 </Form.Item>
@@ -142,6 +154,7 @@ const StepForm = (props) => {
                     let name = `hobby${hobby}`
                     return (<Form.Item  key={hobby} {...layout} label={`hobby ${hobby}`}>
                         {getFieldDecorator(name, {
+                            initialValue: values[name],
                             rules: [{ required: true, message: 'Please input your hobby!' }],
                         })(<Input style={{width: "60%", marginRight: 8}} onInput={(e)=> handlePersist({[name]: e.target.value})} />)}
                         <Button type="danger" size={"small"} onClick={() => removeHobby(index)}>Remove</Button>
