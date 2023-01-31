@@ -104,4 +104,68 @@
     justify-content: center;
     gap: 40px;
     margin: 50px;
-    list-style: none}
+    list-style: none
+}
+
+.res-title {
+    text-align: center;
+    background-color: gray;
+    margin: 0 auto;
+    width: 80vw;
+    height: 10vw;
+    vertical-align: middle;
+    padding: 70px 0;
+}
+.res-title h2{
+    margin: 0;
+}
+
+.resume {
+    width: 80vw;
+    height: 842px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+}
+.left, .right {
+    width: 50%;
+}
+.left {
+    background-color: #ebe2e1;
+    padding: 40px;
+}
+.right {
+    padding: 40px;
+}
+.biodata, .education{
+    width: 50%;
+    height: 200px;
+}
+.experience, .hobbies {
+    width: 70%;
+    height: 200px;
+}
+.resume h2 {
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+.buttons {
+    width: 80vw;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit p:hover{
+    cursor: pointer;
+}
