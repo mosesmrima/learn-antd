@@ -17,14 +17,16 @@ import {createContext, useState} from "react";
 //comment
 
 export const RouteContext = createContext()
+export const ResumeContext = createContext()
 function App () {
     const [activeKey, setActiveKey] = useState("1")
+    const [resumeData, setResumeData] = useState([])
      return (
                 <>
                     <RouteContext.Provider value={{activeKey, setActiveKey}}>
+                        <ResumeContext.Provider value={{resumeData, setResumeData}}>
                         <nav>
                             <ul className={"nav-bar"}>
-                                <li> <Link to={"/"}>Home</Link> </li>
                                 <li> <Link to={"/routeme"} > Routeme </Link> </li>
                                 <li> <Link to={"/form"}>Form</Link> </li>
                                 <li> <Link to={"/patients"}>Patients</Link> </li>
@@ -34,7 +36,6 @@ function App () {
                             </ul>
                         </nav>
                         <Routes>
-                            <Route path={"/"} element={<Home/>}/>
                             <Route path={"/routeme"} element={<RouteMe/>}/>
                             <Route path={"/form"} element={ <FormComp/>} />
                             <Route path={"/patients"}>
@@ -46,7 +47,9 @@ function App () {
                             <Route path={"/tab2"} element={<Tab2/>}/>
                             <Route path={"/tab3"} element={<Tab3/>}/>
                             <Route path={"/stepform"}  element={<Resume/>}/>
+                            <Route path={"/preview"} element={<Home/>}/>
                         </Routes>
+                        </ResumeContext.Provider>
                     </RouteContext.Provider>
                     </>
         )
