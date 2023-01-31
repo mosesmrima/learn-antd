@@ -1,8 +1,14 @@
 import {Steps, Button, Form, Input, DatePicker} from "antd";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
+import {useNavigate, useLocation} from "react-router-dom";
+import moment from "moment";
+import {ResumeContext} from "./App";
 
 
 const StepForm = (props) => {
+    const {state} = useLocation()
+    const{resumeData, setResumeData} = useContext(ResumeContext)
+    const navigate =  useNavigate()
     const layout = {
         labelCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 8 }, lg: { span: 8 } },
         wrapperCol: { xs: { span: 24 }, sm: { span: 24 }, md: { span: 12 }, lg: { span: 8 } }
@@ -10,8 +16,12 @@ const StepForm = (props) => {
     const {getFieldDecorator} = props.form
     const [current, setCurrent] = useState(0)
     const [hobbies, setHobbies] = useState([1]);
-
-    const [values, setValue] = useState({
+    useEffect(() => {
+        if (state) {
+            setCurrent(state.current)
+        }
+    }, [])
+    const [values, setValue] = useState(resumeData?resumeData:{
         name: "",
         email: "",
         phone: "",
@@ -24,7 +34,6 @@ const StepForm = (props) => {
         "work-period": []
     })
     useEffect(()=>{
-        console.log(props.form.getFieldsValue())
     }, [current])
     const addHobby = () => {
         const nextHobbies = [...hobbies, hobbies.length + 1];
@@ -38,11 +47,11 @@ const StepForm = (props) => {
     const handlePersist = value => {
         setValue({...values, ...value})
     }
-    const handlePrevious = (e) => {
+    const handlePrevious = () => {
         setCurrent(prevState => prevState - 1)
 
     }
-    const handleNext = (e) => {
+    const handleNext = () => {
         const vals = props.form.getFieldsValue()
         setCurrent(prevState => prevState + 1)
         props.form.setFieldsValue(vals)
@@ -51,7 +60,9 @@ const StepForm = (props) => {
         e.preventDefault()
         props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                console.log(values)
+                setResumeData(values)
+                const state = {...values, dob: moment(values.dob).format("DD-MM-YYYY"), "edu-period": values["edu-period"].map(el => moment(el).format("DD-MM-YYYY")), "work-period": values["work-period"].map(el => moment(el).format("DD-MM-YYYY"))}
+                navigate("/preview", {state, replace: false})
             }
         })
     }
@@ -63,9 +74,9 @@ const StepForm = (props) => {
                 <Form.Item label="Name" {...layout}>
                     {
                         getFieldDecorator("name",{
-                            // initialValue: values.name,
+                            initialValue: values.name,
                             rules: [{required: true}]})(
-                            <Input />
+                            <Input onChange={ e => handlePersist({name: e.target.value})}/>
                         )
                     }
                 </Form.Item>
@@ -201,7 +212,7 @@ const StepForm = (props) => {
                             htmlType={"submit"}
                             onClick={(e) => handleFinish(e)}
                             style={{marginLeft: "80%"}}
-                        >Finish</Button>)
+                        >Preview</Button>)
                     }
                 </Form>
         </>
