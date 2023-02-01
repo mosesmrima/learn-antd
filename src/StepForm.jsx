@@ -41,6 +41,9 @@ const StepForm = (props) => {
     }
 
     const removeHobby = index => {
+        const dynamicKey = `hobby${index}`
+        let {[dynamicKey]:_, ...rest} = values;
+        setValue(rest)
         setHobbies(hobbies.filter((hobby, i) => i !== index));
     };
 
@@ -91,7 +94,7 @@ const StepForm = (props) => {
                 </Form.Item>
                 <Form.Item label="Phone" {...layout}>
                     {
-                        getFieldDecorator("phone", {initialValue: values.phone,rules: [{required: true}]})(
+                        getFieldDecorator("phone", {initialValue: values.phone,rules: [{required: true, pattern: new RegExp(/^[0-9]+$/), message: "Enter a valid number"}]})(
                             <Input onChange={ e => handlePersist({phone: e.target.value})}/>
                         )
                     }
