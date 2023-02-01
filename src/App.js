@@ -22,7 +22,7 @@ function App () {
     const [activeKey, setActiveKey] = useState("1")
     const [resumeData, setResumeData] = useState([])
      return (
-                <>
+                <div className={"app"}>
                     <RouteContext.Provider value={{activeKey, setActiveKey}}>
                         <ResumeContext.Provider value={{resumeData, setResumeData}}>
                         <nav>
@@ -51,7 +51,7 @@ function App () {
                         </Routes>
                         </ResumeContext.Provider>
                     </RouteContext.Provider>
-                    </>
+                    </div>
         )
     }
     export default App

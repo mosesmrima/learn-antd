@@ -3,6 +3,7 @@ import {useState, useEffect, useContext} from "react";
 import {useNavigate, useLocation} from "react-router-dom";
 import moment from "moment";
 import {ResumeContext} from "./App";
+import "./App.css"
 
 
 const StepForm = (props) => {
@@ -162,7 +163,7 @@ const StepForm = (props) => {
             </>
         },
         {
-            title: "sample",
+            title: "Hobbies",
             content: <>
                 {hobbies.map((hobby, index) => {
                     let name = `hobby${hobby}`
@@ -185,39 +186,41 @@ const StepForm = (props) => {
 
     return (
         <>
-            <Steps current={current} style={{width: "90%", marginRight: "auto", marginLeft: "auto"}}>
-                {
-                    steps.map((el ,index)=> <Steps.Step key={index} title={el.title}/>)
-                }
-            </Steps>
-                <Form onSubmit={handleFinish} style={{width: "90%", marginLeft: "auto", marginRight: "auto"}}>
-                    {
-                        steps[current].content
-                    }
-                    {
-                       ( current > 0) && (<Button
-                            type={"primary"}
-                            onClick={(e) => handlePrevious(e)}
-                            style={{margin: 8}}
-                        >Previous</Button>)
-                    }
-                    {
-                        (current < steps.length - 1 ) && (
-                            <Button
-                            type="primary"
-                            onClick={(e) => handleNext(e)}
-                            style={{marginLeft: "80%"}}
-                            >Next</Button>)
-                    }
-                    {
-                        (current === steps.length - 1 ) && (
-                            <Button
-                            htmlType={"submit"}
-                            onClick={(e) => handleFinish(e)}
-                            style={{marginLeft: "80%"}}
-                        >Preview</Button>)
-                    }
-                </Form>
+         <div className={"step-form"}>
+             <Steps direction={"vertical"} current={current} className={"steps"}>
+                 {
+                     steps.map((el ,index)=> <Steps.Step key={index} title={el.title}/>)
+                 }
+             </Steps>
+             <Form onSubmit={handleFinish} className={"form"}>
+                 {
+                     steps[current].content
+                 }
+                 {
+                     ( current > 0) && (<Button
+                         type={"primary"}
+                         onClick={(e) => handlePrevious(e)}
+                         style={{margin: 8}}
+                     >Previous</Button>)
+                 }
+                 {
+                     (current < steps.length - 1 ) && (
+                         <Button
+                             type="primary"
+                             onClick={(e) => handleNext(e)}
+                             style={{marginLeft: "80%"}}
+                         >Next</Button>)
+                 }
+                 {
+                     (current === steps.length - 1 ) && (
+                         <Button
+                             htmlType={"submit"}
+                             onClick={(e) => handleFinish(e)}
+                             style={{marginLeft: "80%"}}
+                         >Preview</Button>)
+                 }
+             </Form>
+         </div>
         </>
     );
 }
